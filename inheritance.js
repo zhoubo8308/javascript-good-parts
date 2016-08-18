@@ -7,7 +7,7 @@ if(typeof Object.create !== 'function'){
 }
 
 Function.prototype.method = function(name, func){
-	//Õâ¸öµØ·½ÎªÊ²Ã´²»ÄÜÓÃthis.prototype.name
+	//è¿™ä¸ªåœ°æ–¹ä¸ºä»€ä¹ˆä¸èƒ½ç”¨this.prototype.name
 	this.prototype[name] = func;
 	return this;
 };
@@ -15,7 +15,7 @@ Function.prototype.method = function(name, func){
 Function.method('new', function ( ) {
 // Create a new object that inherits from the constructor's prototype.
 	var that = Object.beget(this.prototype);
-// Invoke the constructor, binding ¨Cthis- to the new object.
+// Invoke the constructor, binding â€“this- to the new object.
 	var other = this.apply(that, arguments);
 // If its return value isn't an object,substitute the new object.
 	return (typeof other === 'object' && other) || that;
@@ -37,7 +37,7 @@ var name = myMammal.get_name( ); // 'Herb the Mammal'
 console.log(name);
 
 /**----inherits from Mammal by defining its constructor function and replacing prototype with an instance of Mammal--------------------*/
-/**Í¨¹ı¶¨Òå¹¹Ôìº¯ÊıºÍÓÃMammalµÄÊµÀıÀ´È¡´úcatµÄprototype£¬À´ÊµÏÖ¼Ì³ĞMammal*/
+/**é€šè¿‡å®šä¹‰æ„é€ å‡½æ•°å’Œç”¨Mammalçš„å®ä¾‹æ¥å–ä»£catçš„prototypeï¼Œæ¥å®ç°ç»§æ‰¿Mammal*/
 var Cat = function(name){
 	this.name = name;
 	this.saying = 'meow';
@@ -45,7 +45,7 @@ var Cat = function(name){
 
 Cat.prototype = new Mammal();
 
-//À©Õ¹cat µÄprototype£¬Ôö¼ÓpurrºÍget_name
+//æ‰©å±•cat çš„prototypeï¼Œå¢åŠ purrå’Œget_name
 Cat.prototype.purr = function(n){
 	var i, s = '';
 	for(i=0; i<n; i+=1){
@@ -66,8 +66,8 @@ var says = myCat.says(); console.log('says = ' +says);
 var purr = myCat.purr(5); console.log('purr = ' + purr);
 var name = myCat.get_name(); console.log('name = '+name);
 
-/**×Ô¶¨Òåinherits·½·¨À´ÊµÏÖ¼Ì³Ğ*/
-Function.method('inherits', function(Parent){//parent---Òª¼Ì³ĞµÄ¸¸¶ÔÏó
+/**è‡ªå®šä¹‰inheritsæ–¹æ³•æ¥å®ç°ç»§æ‰¿*/
+Function.method('inherits', function(Parent){//parent---è¦ç»§æ‰¿çš„çˆ¶å¯¹è±¡
 	this.prototype = new Parent();
 	return this;
 });
@@ -130,34 +130,35 @@ var myCoolCat = coolcat({name:'Bix'});
 var name = myCoolCat.get_name();
 console.log(name);
 
-/**¼òµ¥µÄÊÂ¼ş´¦Àí³ÌĞò*/
+/**ç®€å•çš„äº‹ä»¶å¤„ç†ç¨‹åº*/
 
 var eventuality = function(that){
 	var registry = {};
 	that.fire = function(event){
 	
-	//´¥·¢Ò»¸ö¶ÔÏóÉÏµÄÒ»¸öÊÂ¼ş£¬Õâ¸öÊÂ¼ş¿ÉÒÔÊÇÒ»¸ö×Ö·û´®£¨ÊÂ¼şµÄÃû×Ö£©£¬»òÕßÒ»¸ö¶ÔÏóÓĞÊÂ¼şµÄÃû×ÖÊôĞÔºÍÀàĞÍÊôĞÔ¡£handlersÓÉonÀ´×¢²á£¬Ò»µ©ÊÂ¼şnameÎÇºÏ¾Í´¥·¢¡£
+	//è§¦å‘ä¸€ä¸ªå¯¹è±¡ä¸Šçš„ä¸€ä¸ªäº‹ä»¶ï¼Œè¿™ä¸ªäº‹ä»¶å¯ä»¥æ˜¯ä¸€ä¸ªå­—ç¬¦ä¸²ï¼ˆäº‹ä»¶çš„åå­—ï¼‰ï¼Œæˆ–è€…ä¸€ä¸ªå¯¹è±¡æœ‰äº‹ä»¶çš„åå­—å±æ€§å’Œç±»å‹å±æ€§ã€‚
+	//handlersç”±onæ¥æ³¨å†Œï¼Œä¸€æ—¦äº‹ä»¶nameå»åˆå°±è§¦å‘ã€‚
 		var array, func, handler, i, 
 		type = typeof event ==='String'? event:event.Type;
 		
-		//Èç¹ûÒ»¸öÊÂ¼şÉÏÓĞÒ»¸öÊı×éµÄhandlers£¬Ñ­»·Õâ¸öÊı×é£¬°´Ë³ĞòÖ´ĞĞhandlers
+		//å¦‚æœä¸€ä¸ªäº‹ä»¶ä¸Šæœ‰ä¸€ä¸ªæ•°ç»„çš„handlersï¼Œå¾ªç¯è¿™ä¸ªæ•°ç»„ï¼ŒæŒ‰é¡ºåºæ‰§è¡Œhandlers
 		if(registry.hasOwnProperty(type)){
 			array = registry[type];
 			for(i=0; i<array.length;i+=1){
 				handler = array[i];
-		//Ò»¸öhandler record°üº¬Ò»¸ömethodºÍÒ»¸ö¿ÉÑ¡µÄ²ÎÊıÊı×é£¬Èç¹ûmethodÊÇÒ»¸öname£¬²éÕÒÒ»¸önameµÄ·½·¨¡£		
+		//ä¸€ä¸ªhandler recordåŒ…å«ä¸€ä¸ªmethodå’Œä¸€ä¸ªå¯é€‰çš„å‚æ•°æ•°ç»„ï¼Œå¦‚æœmethodæ˜¯ä¸€ä¸ªnameï¼ŒæŸ¥æ‰¾ä¸€ä¸ªnameçš„æ–¹æ³•ã€‚		
 				func = handler.method;
 				if(typeof func === 'String'){
 					func = this[func];
 				}
-		//µ÷ÓÃÕâ¸öhandler£¬Èç¹ûÕâ¸örecordº¬ÓĞ²ÎÊı£¬¾Í´«µİ²ÎÊı£¬·ñÔò£¬´«µİevent		
+		//è°ƒç”¨è¿™ä¸ªhandlerï¼Œå¦‚æœè¿™ä¸ªrecordå«æœ‰å‚æ•°ï¼Œå°±ä¼ é€’å‚æ•°ï¼Œå¦åˆ™ï¼Œä¼ é€’event		
 				func.apply(this, handler.parameters || [event]);
 			}
 		}
 		return this;
 	};
 	that.on = function(type, method, parameters){
-	//×¢²áÒ»¸öevent£¬´´½¨Ò»¸öhandler record£¬·ÅÈëhandler arrayÖĞ£¬Èç¹û¶ÔÓ¦Õâ¸ötypeµÄ²»´æÔÚ£¬Ôò´´½¨Ò»¸öhandler
+	//æ³¨å†Œä¸€ä¸ªeventï¼Œåˆ›å»ºä¸€ä¸ªhandler recordï¼Œæ”¾å…¥handler arrayä¸­ï¼Œå¦‚æœå¯¹åº”è¿™ä¸ªtypeçš„ä¸å­˜åœ¨ï¼Œåˆ™åˆ›å»ºä¸€ä¸ªhandler
 		var handler = {
 			method : method;
 			parameters : parameters
