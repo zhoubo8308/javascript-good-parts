@@ -1,6 +1,11 @@
 ﻿//string.replace(searchValue,replaceValue);
 /**
 *The search value can be a string or regular expression object. If it is a string,only the first occurance of the value is replaced.
+*If it is a regular expression object without 'g', only the first occurance of the value is replaced.
+*If it is a regular expression object with 'g', all the occurance of the value are replaced.
+*result1 = mother_in-law
+*result2 = mother_in-law
+*result3 = mother_in_law
 */
 
 var result1='mother-in-law'.replace('-','_');
@@ -33,6 +38,8 @@ console.log('p4 = ' + p4);
 
 /**
 *replaceValue is a function
+* The first parameter passed to the function is the matched value, the second parameter is the text of capture group1,
+* the next paramter is the text of capture group2, and so on.
 */
 var regep = /:(\w+)/g;
 var testStr = ':method :url'
