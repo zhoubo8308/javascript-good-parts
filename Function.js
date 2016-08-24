@@ -2,14 +2,14 @@ var add = function(a,b){
 	return a+b;
 }
 
-/*À©Õ¹Function£¬ÎªÆäÌí¼ÓÒ»¸ömethodÊôĞÔ,µ÷ÓÃËü¾ÍÎªFunctionÔö¼ÓÁËÒ»¸öÃûÎªnameµÄº¯Êı*/
+/*æ‰©å±•Functionï¼Œä¸ºå…¶æ·»åŠ ä¸€ä¸ªmethodå±æ€§,è°ƒç”¨å®ƒå°±ä¸ºFunctionå¢åŠ äº†ä¸€ä¸ªåä¸ºnameçš„å‡½æ•°*/
 Function.prototype.method = function(name, func){
-	//Õâ¸öµØ·½ÎªÊ²Ã´²»ÄÜÓÃthis.prototype.name
+	//è¿™ä¸ªåœ°æ–¹ä¸ºä»€ä¹ˆä¸èƒ½ç”¨this.prototype.name,é˜²æ­¢nameé‡Œæœ‰â€œ-â€
 	this.prototype[name] = func;
 	return this;
 };
 
-/¡Áµ÷ÓÃmethodµÄº¯Êı£¬ÎªFuntionÔö¼ÓÃûÎªcurryµÄº¯Êı¡Á/
+//è°ƒç”¨methodçš„å‡½æ•°ï¼Œä¸ºFuntionå¢åŠ åä¸ºcurryçš„å‡½æ•°
 Function.method('curry', function(){
 	var slice = Array.prototype.slice,
 	args = slice.apply(arguments), that = this;
@@ -17,7 +17,7 @@ Function.method('curry', function(){
 		return that.apply(slice,args.concat(slice.apply(arguments)));
 	}
 });
-//Functions are values£¬add is a Value£¬add1 is  the return function
+//Functions are valuesï¼Œadd is a Valueï¼Œadd1 is  the return function
 var add1 = add.curry(1);
 var result = add1(8);
 
@@ -32,19 +32,19 @@ var fibonacci = (function(){
 		return result;
 	};
 	return fib;
-}()//×¢ÒâÕâ¸öĞ´·¨£¬Ò»¸öº¯ÊıÖ±½Óµ÷ÓÃ£¬ºóÃæÃ»ÓĞ¡°;¡±
+}()//æ³¨æ„è¿™ä¸ªå†™æ³•ï¼Œä¸€ä¸ªå‡½æ•°ç›´æ¥è°ƒç”¨ï¼Œåé¢æ²¡æœ‰â€œ;â€
 );
-//fibonacciÖĞµÄn=10£¬Õâ¸ö²ÎÊı´«µİ±È½ÏÅ£±Æ¡£
+//fibonacciä¸­çš„n=10ï¼Œè¿™ä¸ªå‚æ•°ä¼ é€’æ¯”è¾ƒç‰›é€¼ã€‚
 var temp = fibonacci(10);
 
-//1.¶¨ÒåÒ»¸öº¯Êı£¬memo-Array£¬formula£ºFunction
+//1.å®šä¹‰ä¸€ä¸ªå‡½æ•°ï¼Œmemo-Arrayï¼Œformulaï¼šFunction
 var memoizer = function(memo, formula){
-	//¶¨ÒåÒ»¸örecurº¯Êı
+	//å®šä¹‰ä¸€ä¸ªrecurå‡½æ•°
 	var recur = function(n){
-		//È¡memo[n]¸øresult£¬Èç¹ûn²»ÊÇ0,1,ÄÇÃ´result¾ÍÊÇundefine
+		//å–memo[n]ç»™resultï¼Œå¦‚æœnä¸æ˜¯0,1,é‚£ä¹ˆresultå°±æ˜¯undefine
 		var result = memo[n];
 		if(typeof result !== 'number'){
-			//ÔÚÕâÀï½øĞĞµİ¹é²Ù×÷
+			//åœ¨è¿™é‡Œè¿›è¡Œé€’å½’æ“ä½œ
 			result = formula(recur,n);
 			memo[n] = result;
 		}
